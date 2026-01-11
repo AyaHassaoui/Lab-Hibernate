@@ -122,7 +122,6 @@ Le résultat montre :
 
 
 ---
-## 7. Informations Générales
 
 **Réalisé par :**
 HASSAOUI Aya
