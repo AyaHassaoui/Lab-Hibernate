@@ -1,103 +1,158 @@
 
+---
 
-# TP :  Hibernate 
+# TP Hibernate
 
-## 1. Contexte et Objectifs
+## 1. Introduction
 
-Ce travail pratique a pour objectif de mettre en place une application Java utilisant **Hibernate ORM** pour assurer la persistance des données dans une base de données **MySQL**.
-
-À travers ce TP, nous visons à :
-
-* Comprendre le fonctionnement du framework Hibernate.
-* Configurer un projet Java Maven intégrant Hibernate et MySQL.
-* Créer des entités persistantes mappées sur des tables relationnelles.
-* Implémenter les opérations CRUD (Create, Read, Update, Delete).
-* Tester le bon fonctionnement de la couche de persistance.
+L’objectif de ce travail pratique est de mettre en œuvre une application Java basée sur **Hibernate ORM** pour gérer la persistance des données dans une base **MySQL**.
+Ce projet permet de comprendre le principe du mapping objet–relationnel et l’implémentation d’une couche DAO pour manipuler les données de manière abstraite.
+<img width="373" height="530" alt="image" src="https://github.com/user-attachments/assets/3127600f-be0a-472f-b3ca-fca3234e7d13" />
 
 ---
 
-## 2. Architecture Générale du Projet
+## 2. Environnement de Travail
 
-L’architecture du projet repose sur une organisation modulaire facilitant la maintenance et l’évolution du code.
-
-### Structure globale :
-
-* **config** : contient les fichiers de configuration Hibernate.
-* **entities** : regroupe les classes représentant les entités persistantes.
-* **dao** : contient les classes de gestion d’accès aux données.
-* **util** : fournit les classes utilitaires (connexion Hibernate, sessions, etc.).
-* **main** : contient la classe de test permettant d’exécuter les opérations CRUD.
-
-Cette structuration permet de respecter les bonnes pratiques de séparation des responsabilités.
+| Outil / Technologie | Version       |
+| ------------------- | ------------- |
+| Java JDK            | 17            |
+| Maven               | 3.x           |
+| Hibernate ORM       | 6.x           |
+| MySQL               | 8.x           |
+| IDE                 | IntelliJ IDEA |
+| Système             | Windows 11    |
 
 ---
 
-## 3. Configuration Hibernate – MySQL
+## 3. Architecture du Projet
 
-Le projet est configuré à l’aide :
+Le projet est structuré selon une architecture modulaire :
 
-* du fichier `hibernate.cfg.xml` pour la connexion à la base MySQL,
-* des annotations JPA (`@Entity`, `@Id`, `@Column`, etc.) pour le mapping objet–relationnel,
-* des dépendances Maven pour intégrer Hibernate, MySQL Connector et JPA.
-
-Hibernate se charge automatiquement de :
-
-* créer les tables,
-* gérer les transactions,
-* traduire les requêtes Java en SQL.
-
----
-
-## 4. Implémentation de la Couche DAO
-
-La couche DAO (Data Access Object) permet d’encapsuler toutes les opérations d’accès aux données :
-
-| Méthode      | Description                        |
-| ------------ | ---------------------------------- |
-| `save()`     | Enregistrer un objet dans la base  |
-| `update()`   | Mettre à jour un enregistrement    |
-| `delete()`   | Supprimer un objet                 |
-| `findById()` | Rechercher par identifiant         |
-| `findAll()`  | Récupérer tous les enregistrements |
-
-Cette approche garantit une meilleure réutilisabilité et une indépendance entre la logique métier et la base de données.
+```
+src/main/java
+ ├── com.example       → Classe principale App
+ ├── dao               → Interface IDao
+ ├── entities          → Classes Machine, Salle
+ ├── services          → MachineService, SalleService
+ └── util              → HibernateUtil
+src/main/resources
+ └── hibernate.cfg.xml → Configuration Hibernate
+src/test/java
+ └── Tests unitaires (MachineServiceTest, SalleServiceTest)
+```
 
 ---
 
-## 5. Exécution et Résultats
+## 4. Description des Composants
 
-L’exécution du programme se fait via la classe principale :
+### 4.1 Entités
 
-* Insertion d’un nouvel objet dans la base.
-* Affichage des données stockées.
-* Mise à jour d’un enregistrement.
-* Suppression d’un objet.
+* **Machine** : représente une machine avec :
 
-Les captures d’écran montrent la bonne création des tables, l’exécution des requêtes SQL générées automatiquement par Hibernate et la persistance effective des données dans MySQL.
+  * id
+  * référence
+  * date d’achat
+  * salle associée
+
+* **Salle** : représente une salle avec :
+
+  * id
+  * code
+
+Ces classes sont annotées avec `@Entity`, `@Id`, `@GeneratedValue`, `@ManyToOne`.
 
 ---
 
-## 6. Conclusion
+### 4.2 Couche DAO
+
+Interface générique :
+
+```java
+public interface IDao<T> {
+    boolean create(T o);
+    boolean update(T o);
+    boolean delete(T o);
+    T findById(int id);
+    List<T> findAll();
+}
+```
+
+---
+
+### 4.3 Services
+
+* **MachineService**
+* **SalleService**
+
+Ils implémentent les méthodes CRUD via Hibernate SessionFactory.
+
+---
+
+### 4.4 HibernateUtil
+
+Cette classe permet de créer une instance unique de `SessionFactory` à partir du fichier `hibernate.cfg.xml`.
+
+---
+
+## 5. Configuration Hibernate
+
+Le fichier `hibernate.cfg.xml` contient :
+
+* paramètres de connexion MySQL
+* dialecte Hibernate
+* mapping des classes Machine et Salle
+* mode `update` pour la création automatique des tables
+
+---
+
+## 6. Tests et Exécution
+
+Les classes de test exécutent automatiquement :
+
+* l’insertion des salles
+* l’insertion des machines
+* l’affichage des données
+* la mise à jour et la suppression
+
+Le résultat montre :
+
+
+```
+
+
+➡️ Cela confirme la bonne communication entre Java, Hibernate et MySQL.
+
+---
+
+## 7. Résultats
+
+Les tables **machine** et **salle** sont créées automatiquement dans la base MySQL et les opérations CRUD fonctionnent parfaitement.
+<img width="1471" height="722" alt="image" src="https://github.com/user-attachments/assets/bc57aaee-949b-48ca-9c27-476cd22fe603" />
+
+<img width="1457" height="647" alt="image" src="https://github.com/user-attachments/assets/a7976aaf-7c35-40a3-a7a6-5fac8bbc6cd0" />
+
+---
+
+## 8. Conclusion
 
 Ce TP nous a permis de :
 
-* maîtriser la configuration d’Hibernate,
-* comprendre le mapping objet–relationnel,
-* manipuler efficacement une base de données relationnelle depuis Java.
+* comprendre Hibernate ORM
+* mettre en place une architecture DAO
+* automatiser la gestion de la persistance
+* exécuter et tester une application Java connectée à MySQL
 
-Hibernate constitue une solution robuste et performante pour le développement d’applications Java orientées données.
+Hibernate facilite considérablement la manipulation des bases relationnelles en Java.
 
 ---
 
-## 7. Informations Générales
+## 9. Informations Générales
 
 **Réalisé par :**
-
-* Nom : **HASSAOUI AYA**
+HASSAOUI Aya
 
 **Encadré par :**
-
-* Pr. **Mohamed LACHGAR**
+Pr. Mohamed LACHGAR
 
 ---
 
