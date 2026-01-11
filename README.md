@@ -121,9 +121,7 @@ Le résultat montre :
 
 
 
-```
-
-
+---
 ## 7. Informations Générales
 
 **Réalisé par :**
@@ -131,6 +129,8 @@ HASSAOUI Aya
 
 **Encadré par :**
 Pr. Mohamed LACHGAR
+
+
 
 ---
 
