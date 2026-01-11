@@ -115,38 +115,16 @@ Les classes de test exécutent automatiquement :
 * la mise à jour et la suppression
 
 Le résultat montre :
+<img width="1471" height="722" alt="image" src="https://github.com/user-attachments/assets/bc57aaee-949b-48ca-9c27-476cd22fe603" />
+
+<img width="1457" height="647" alt="image" src="https://github.com/user-attachments/assets/a7976aaf-7c35-40a3-a7a6-5fac8bbc6cd0" />
+
 
 
 ```
 
 
-➡️ Cela confirme la bonne communication entre Java, Hibernate et MySQL.
-
----
-
-## 7. Résultats
-
-Les tables **machine** et **salle** sont créées automatiquement dans la base MySQL et les opérations CRUD fonctionnent parfaitement.
-<img width="1471" height="722" alt="image" src="https://github.com/user-attachments/assets/bc57aaee-949b-48ca-9c27-476cd22fe603" />
-
-<img width="1457" height="647" alt="image" src="https://github.com/user-attachments/assets/a7976aaf-7c35-40a3-a7a6-5fac8bbc6cd0" />
-
----
-
-## 8. Conclusion
-
-Ce TP nous a permis de :
-
-* comprendre Hibernate ORM
-* mettre en place une architecture DAO
-* automatiser la gestion de la persistance
-* exécuter et tester une application Java connectée à MySQL
-
-Hibernate facilite considérablement la manipulation des bases relationnelles en Java.
-
----
-
-## 9. Informations Générales
+## 7. Informations Générales
 
 **Réalisé par :**
 HASSAOUI Aya
